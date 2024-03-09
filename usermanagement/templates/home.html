@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>EFT-Platform Integration</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+	<div class="main">
+		<h1>EFT-Platform Integration</h1>
+		<h3>Voice Registration</h3>
+		<form method="POST" action="{{ url_for('record_audio') }}">
+
+
+
+			<div class="wrap">
+				
+                    <input type="submit" value="Record">
+			</div>
+		</form>
+
+	</div>
+</body>
+
+</html>
