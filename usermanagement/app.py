@@ -48,6 +48,8 @@ def login():
 
         if user and user[3]==password:
             print(user[0])
+            print(user[1])
+            print(user[2])
             print(user[3])
             flash('Login successful!', 'success')
             return redirect(url_for('home'))
