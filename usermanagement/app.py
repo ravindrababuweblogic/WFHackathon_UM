@@ -5,11 +5,13 @@ import record
 import pyodbc
 
 app = Flask(__name__)
-server = 'tcp:hackiam.database.windows.net'
-database = '<your_database>'
-username = 'CloudSAa8c62dc4'
-password = '<your_password>'
-driver= '{ODBC Driver 17 for SQL Server}'
+app.secret_key = "super secret key"
+server = 'tcp:resourceiam.database.windows.net'
+database = 'resourcedb'
+username = 'admintomlin'
+password = 'Tomlin@WF'
+#driver = "com.mysql.cj.jdbc.XADataSource"
+driver= '{ODBC Driver 18 for SQL Server}'
 
 connection_string = f'DRIVER={driver};SERVER={server};PORT=1433;DATABASE={database};UID={username};PWD={password}'
 cnxn = pyodbc.connect(connection_string)
@@ -23,7 +25,8 @@ def register():
         email = request.form['email']
         password = request.form['password']
         cur = cnxn.cursor()
-        cur.execute("INSERT INTO users (username, email, password) VALUES (%s, %s, %s)", (username, email, password))
+        #cur.execute("CREATE table users (id INT IDENTITY PRIMARY KEY, username VARCHAR(255), email VARCHAR(255),password VARCHAR(255)) ")
+        cur.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, password))
         cnxn.commit()
         cur.close()
 
@@ -39,7 +42,7 @@ def login():
         password = request.form['password']
 
         cur = cnxn.cursor() 
-        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        cur.execute("SELECT * FROM users WHERE email = ?", (email,))
         user = cur.fetchone()
         cur.close()
 
