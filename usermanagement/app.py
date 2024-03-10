@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash, send_file, Response
+from flask import Flask,flash, render_template, redirect, url_for, request,  send_file, Response
 import bcrypt
 import record
 import pyodbc
@@ -28,7 +28,7 @@ def register():
         cur.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, password))
         cnxn.commit()
         cur.close()
-        cnxn.close()
+        #cnxn.close()
 
         flash('Your account has been created! You can now log in.', 'success')
         return redirect(url_for('login'))
@@ -67,6 +67,7 @@ def home():
 def record_audio():
     record.record_audio()
     return send_file('recorded_audio.wav', as_attachment=True)
+
 # Other routes and functions...
 
 if __name__ == '__main__':

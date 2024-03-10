@@ -8,8 +8,8 @@
 
 <body>
 	<div class="main">
-		<h1>EFT-Platform Integration</h1>
-		<h3>Enter your login credentials</h3>
+		<h1>voice recognition</h1>
+		
 		<form method="POST" action="{{ url_for('login') }}">
 			<label for="first">
 				Username:
@@ -33,6 +33,14 @@
 					Submit
 				</button>
 			</div>
+		
+			{% with messages = get_flashed_messages() %}
+			{% if messages %}
+			  {% for message in messages %}
+				<div class="flash-message">{{ message }}</div>
+			  {% endfor %}
+			{% endif %}
+		  {% endwith %}
 		</form>
 		<p>Not registered? 
 			<a href="{{ url_for('register') }}"

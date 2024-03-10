@@ -24,7 +24,8 @@ def record_audio():
 
     audio.terminate()
 
-    wf = wave.open('D:\\Python\\first_sample\\usermanagement\\recorded_audio.wav', 'wb')
+    wf = wave.open('D:\\Python\\first_sample\\Hackathon_UM\\usermanagement\\recorded_audio.wav', 'wb')
+    
 
     wf.setnchannels(1)
     wf.setsampwidth(audio.get_sample_size(pyaudio.paInt16))

@@ -10,17 +10,31 @@
     <h1>Register</h1>
     <form method="POST" action="{{ url_for('register') }}">
         <label>Username:</label>
-        <input type="text" name="username" required><br>
-
+        <input type="text" name="username" required>
         <label>Email:</label>
-        <input type="email" name="email" required><br>
+        <input type="email" name="email" required>
 
         <label>Password:</label>
-        <input type="password" name="password" required><br>
+        <input type="password" name="password" required>
         <div class="wrap">
         <button type="submit">Register</button></div>
+        
+        <div id="flash-message" class="flash-message">
+        <span id="flash-message-text"></span>
+        <button id="dismiss-button" data-url="{{ url_for('login') }}">Dismiss</button>
+        
     </form>
     <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
     </div>
+    <script>
+        document.getElementById("dismiss-button").addEventListener("click", function() {
+          // Hide the flash message
+          const flashMessage = this.previousElementSibling;
+          flashMessage.style.display = "none";
+  
+          // Redirect to the login page
+          window.location.href = this.dataset.url;
+        });
+      </script>
 </body>
 </html>
