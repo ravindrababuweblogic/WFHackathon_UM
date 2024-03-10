@@ -1,0 +1,7 @@
+flask
+bcrypt
+record
+pyodbc
+pyaudio
+wave
+os
