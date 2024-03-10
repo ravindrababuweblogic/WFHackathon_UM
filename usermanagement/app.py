@@ -1,5 +1,4 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, send_file, Response
-from flask_mysqldb import MySQL
 import bcrypt
 import record
 import pyodbc
