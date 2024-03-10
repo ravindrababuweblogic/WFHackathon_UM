@@ -6,10 +6,10 @@ import pyodbc
 
 app = Flask(__name__)
 app.secret_key = "super secret key"
-server = 'tcp:resourceiam.database.windows.net'
-database = 'resourcedb'
-username = 'admintomlin'
-password = 'Tomlin@WF'
+server = 'tcp:mydbiam.database.windows.net'
+database = 'mydb'
+username = 'iamdb'
+password = 'Kubectl_90'
 #driver = "com.mysql.cj.jdbc.XADataSource"
 driver= '{ODBC Driver 18 for SQL Server}'
 
@@ -29,6 +29,7 @@ def register():
         cur.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, password))
         cnxn.commit()
         cur.close()
+        cnxn.close()
 
         flash('Your account has been created! You can now log in.', 'success')
         return redirect(url_for('login'))
@@ -45,6 +46,7 @@ def login():
         cur.execute("SELECT * FROM users WHERE email = ?", (email,))
         user = cur.fetchone()
         cur.close()
+        
 
         if user and user[3]==password:
             print(user[0])
@@ -55,7 +57,7 @@ def login():
             return redirect(url_for('home'))
         else:
             flash('Login failed. Please check your email and password.', 'danger')
-
+    #cnxn.close()
     return render_template('login.html')
 
 @app.route('/home')
