@@ -55,10 +55,13 @@ def login():
         
 
         if user and user[3]==password:
-            print(user[0])
-            print(user[1])
-            print(user[2])
-            print(user[3])
+            #print(user[0])
+            #print(user[1])
+            #print(user[2])
+            #print(user[3])
+            session["username"] = user[1]
+            username = session.get("username")
+            print(username)
             #session['user'] = user.to_dict()
             flash('Login successful!', 'success')
             return redirect(url_for('home'))

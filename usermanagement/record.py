@@ -5,6 +5,9 @@ from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
 def record_audio():
     
+    username = session.get("username")
+    print(username)
+
     audio = pyaudio.PyAudio()
     stream = audio.open(format=pyaudio.paInt16,
                         channels=1,
@@ -14,7 +17,7 @@ def record_audio():
 
     frames = []
 
-    for i in range(0, int(44100 / 1024 * 5)):
+    for i in range(0, int(44100 / 1024 * 10)):
         data = stream.read(1024)
         frames.append(data)
 
@@ -23,17 +26,18 @@ def record_audio():
 
     audio.terminate()
 
-    #wf = wave.open('D:\\Python\\first_sample\\Hackathon_UM\\usermanagement\\'+username+'.wav', 'wb')
-    wf = wave.open('D:\\Python\\first_sample\\Hackathon_UM\\usermanagement\\record.wav', 'wb')
+    wf = wave.open('D:\\Python\\first_sample\\Hackathon_UM\\usermanagement\\'+username+'.wav', 'wb')
+    #wf = wave.open('D:\\Python\\first_sample\\Hackathon_UM\\usermanagement\\record.wav', 'wb')
 
     wf.setnchannels(1)
     wf.setsampwidth(audio.get_sample_size(pyaudio.paInt16))
     wf.setframerate(44100)
     wf.writeframes(b''.join(frames))
     wf.close()
-    uploadToBlob()
+    uploadToBlob(username)
 
-def uploadToBlob() :
+
+def uploadToBlob(username) :
     # Initialize the connection string
     connection_string = "DefaultEndpointsProtocol=https;AccountName=forblobwf;AccountKey=jVlmKuq+bwcCRykGhRMzETzW0BsOA6FYZrFG6n5ni0FEzT8UOYE2xPqGooFy9jT15ydld9ayPZmS+ASt4veXAw==;EndpointSuffix=core.windows.net"
 
@@ -45,7 +49,7 @@ def uploadToBlob() :
     container_client = blob_service_client.get_container_client(container_name)
 
     # Initialize the BlobClient
-    blob_name = "record.wav"
+    blob_name = username+".wav"
     blob_client = blob_service_client.get_blob_client(container_name, blob_name)
 
     # List all blobs in the container
@@ -54,7 +58,7 @@ def uploadToBlob() :
         print("Blob name: ", blob.name)
 
     # Upload a file to the blobc
-    with open("D:\\Python\\first_sample\\Hackathon_UM\\usermanagement\\record.wav", "rb") as data:
+    with open("D:\\Python\\first_sample\\Hackathon_UM\\usermanagement\\"+username+".wav", "rb") as data:
         blob_client.upload_blob(data, overwrite="true")
 
     # Download a file from the blob
