@@ -1,7 +1,13 @@
-from flask import Flask,flash, render_template, redirect, url_for, request,  send_file, Response
+from flask import Flask,flash, render_template, redirect, url_for, request,  send_file, Response, session
 import bcrypt
 import record
 import pyodbc
+import os
+#from flask.sessions import Session
+#from flask import Session
+#session = Session()
+#session.load_session(os.environ['SESSION_FILE'])
+
 
 app = Flask(__name__)
 app.secret_key = "super secret key"
@@ -26,6 +32,7 @@ def register():
         cur = cnxn.cursor()
         #cur.execute("CREATE table users (id INT IDENTITY PRIMARY KEY, username VARCHAR(255), email VARCHAR(255),password VARCHAR(255)) ")
         cur.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, password))
+        #cur.execute("drop table users")
         cnxn.commit()
         cur.close()
         #cnxn.close()
@@ -52,6 +59,7 @@ def login():
             print(user[1])
             print(user[2])
             print(user[3])
+            #session['user'] = user.to_dict()
             flash('Login successful!', 'success')
             return redirect(url_for('home'))
         else:
@@ -65,10 +73,12 @@ def home():
 
 @app.route('/record_audio', methods=['POST'])
 def record_audio():
+    #if 'user' in session:
+        #username = format(session['user'][1])
     record.record_audio()
-    return send_file('recorded_audio.wav', as_attachment=True)
+    return render_template('home.html')
 
 # Other routes and functions...
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True)  
