@@ -1,6 +1,7 @@
 from flask import Flask,flash, render_template, redirect, url_for, request,  send_file, Response, session
 import bcrypt
 import record
+import audio
 import pyodbc
 import os
 #from flask.sessions import Session
@@ -81,6 +82,14 @@ def record_audio():
     record.record_audio()
     return render_template('home.html')
 
+@app.route('/live_audio', methods=['POST'])
+
+def live_audio():
+    #if 'user' in session:
+        #username = format(session['user'][1])
+    audio.live_audio()
+    ##enter code for for audio comparison
+    return render_template('success.html')
 # Other routes and functions...
 
 if __name__ == '__main__':

@@ -64,3 +64,4 @@ def uploadToBlob(username) :
     # Download a file from the blob
     with open("record.wav", "wb") as file:
         file.write(blob_client.download_blob().readall())
+
