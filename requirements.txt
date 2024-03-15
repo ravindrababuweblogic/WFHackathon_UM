@@ -1,0 +1,8 @@
+speech_recognition as sr
+os
+random
+pyaudio
+pydub
+audio_segment
+pyttsx3
+flask
